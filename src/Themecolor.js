@@ -1,51 +1,47 @@
 import React, {Component} from 'react';
 import PropsType from 'prop-types';
+import {connect} from "./connect";
 
 class ThemeSwitch extends Component {
-    static contextTypes = {
-        store: PropsType.object
+    static propTypes = {
+        themeColor: PropsType.string,
+        onSwitchColor: PropsType.func
     };
 
-    constructor() {
-        super();
-        this.state = {
-            themeColor: ''
-        }
-    }
-
-    componentWillMount() {
-        const {store} = this.context;
-        this._updateThemeColor()
-        store.subscribe(()=>this._updateThemeColor())
-    }
-
-    _updateThemeColor() {
-        const {store} = this.context;
-        const state = store.getState();
-        this.setState({
-            themeColor: state.themeColor
-        })
-    }
-
     handleSwitchColor(color) {
-        const {store} = this.context;
-        store.dispatch({
-            type: 'CHANGE_COLOR',
-            themeColor: color
-        })
+        if (this.props.onSwitchColor) {
+            this.props.onSwitchColor(color)
+        }
+
     }
 
     render() {
         return (
             <div>
-                <button style={{color: this.state.themeColor}}
+                <button style={{color: this.props.themeColor}}
                         onClick={this.handleSwitchColor.bind(this, 'blue')}>blue
                 </button>
-                <button style={{color: this.state.themeColor}} onClick={this.handleSwitchColor.bind(this, 'red')}>red
+                <button style={{color: this.props.themeColor}} onClick={this.handleSwitchColor.bind(this, 'red')}>red
                 </button>
             </div>
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        themeColor: state.themeColor
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSwitchColor: (color) => {
+            dispatch({type: 'CHANGE_COLOR', themeColor: color})
+        }
+    }
+};
+
+ThemeSwitch = connect(mapStateToProps, mapDispatchToProps)(ThemeSwitch);
 
 export default ThemeSwitch
