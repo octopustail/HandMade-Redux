@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropsType from 'prop-types';
-import {connect} from "./connect";
 
 class ThemeSwitch extends Component {
     static propTypes = {
@@ -42,6 +41,5 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-ThemeSwitch = connect(mapStateToProps, mapDispatchToProps)(ThemeSwitch);
 
 export default ThemeSwitch

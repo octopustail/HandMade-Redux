@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Header from "./Header";
-import Content from "./content";
+import Header from "./Container/Header";
+import Content from "./Container/content";
 import './index.css'
-import createStore from './createStore'
-import {Provider} from './react-redux'
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
 
 class Index extends Component {
 
